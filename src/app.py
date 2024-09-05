@@ -34,9 +34,29 @@ def handle_hello():
         "hello": "world",
         "family": members
     }
-
-
     return jsonify(response_body), 200
+
+@app.route('/members', methods=['POST'])
+def new_member():
+    body = request.json
+    new_person = jackson_family.add_member(body) 
+
+    return jsonify(new_person), 200
+
+
+@app.route('/member/<int:member_id>', methods=['GET'])
+def get_one_member(member_id):
+    search_member = jackson_family.get_member(member_id)
+    if search_member == None:
+        return "There has been an error, the id does not exist",404
+    return jsonify(search_member), 200
+
+@app.route('/member/<int:member_id>', methods=['DELETE'])
+def delete_one_member(member_id):
+    delete = jackson_family.delete_member(member_id)
+    if delete == None:
+        return "There has been an error, the id does not exist",404
+    return delete, 200
 
 # this only runs if `$ python src/app.py` is executed
 if __name__ == '__main__':
