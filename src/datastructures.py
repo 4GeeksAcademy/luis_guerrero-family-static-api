@@ -54,7 +54,7 @@ class FamilyStructure:
         return new_person
             
     def delete_member(self, id):
-        for member_index in range(self._members):
+        for member_index in range(len(self._members)):
             if self._members[member_index]["id"] == id:
                 return self._members.pop(member_index)
 
